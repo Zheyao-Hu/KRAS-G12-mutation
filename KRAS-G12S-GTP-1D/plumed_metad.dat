@@ -4,29 +4,17 @@ MOLINFO STRUCTURE=./step3_input.pdb
 FIT_TO_TEMPLATE REFERENCE=step3_input_reference.pdb
 
 # distance between S12-Ca and Pg of GTP
-d1: DISTANCE ATOMS=178,2693
+d2: DISTANCE ATOMS=178,2693
 
-# angle between (35Ca->25Ca) and a-helix1 (25Ca->17Ca)
-#a: ANGLE ATOMS=527,369,241
+uwall: UPPER_WALLS ARG=d2 AT=1.0 KAPPA=2000.0 EXP=2 EPS=1 OFFSET=0 
 
-# distance between Q61-CD and Pg of GTP
-#d2: DISTANCE ATOMS=931,2693
+metad: METAD ARG=d2 ...
 
-# Torsion angle of Tyr32, CG-CB-CA-C
-#t: TORSION ATOMS=481,478,476,493
-
-uwall: UPPER_WALLS ARG=d1 AT=1.0 KAPPA=2000.0 EXP=2 EPS=1 OFFSET=0 
-# lwall: LOWER_WALLS ARG=d1,d2 AT=0.0,0.0 KAPPA=2000.0 EXP=2 EPS=1 OFFSET=0
-
-metad: METAD ARG=d1 ...
-   # Deposit a Gaussian every 500 time steps, with initial height 
-   # equal to 1.2 kJ/mol and bias factor equal to 8 
    PACE=500 HEIGHT=1.2 BIASFACTOR=10 TEMP=310.15
-   # Gaussian width (sigma) should be chosen based on the CV fluctuations in unbiased run 
-   # try 1/2 or 1/3 of the estimated fluctuations 
+
    SIGMA=0.08 GRID_MIN=0 GRID_MAX=5.0 GRID_BIN=300
-   # Gaussians will be written to file and also stored on grid 
+
    FILE=HILLS 
 ...
 # Print both collective variables on COLVAR file every 1 steps
-PRINT ARG=d1,metad.bias FILE=COLVAR STRIDE=10
+PRINT ARG=d2,metad.bias FILE=COLVAR STRIDE=10
