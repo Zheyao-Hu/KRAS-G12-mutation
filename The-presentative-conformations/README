@@ -1,5 +1,6 @@
 This folder stores the scripts for calculating the representative conformations
 
-1. The script ""
+1. The script "COLVAR_filter.py" was used to obtain the frames of the cluster (free energy basins or transition state).
 
+2. The script "Representative_conformation.py" was used to calculate the average conformation and select the representative conformation.
 
